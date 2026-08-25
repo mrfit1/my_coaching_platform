@@ -1,0 +1,16 @@
+# Toronto Performance Coaching
+
+Multilingual personal training and fitness coaching platform serving Toronto, Ontario and selected GTA areas.
+
+Core services:
+- In-home personal training in Toronto
+- Private one-to-one personal training
+- Online fitness coaching
+- Personalized workout programming
+- General nutrition coaching and habit support
+- Beginner and active-aging fitness coaching
+
+Languages: English, Persian (Farsi), French, Spanish.
+Founder and lead coach: Hassan Golestaneh, international fitness coach, judge and athlete with more than two decades of fitness experience.
+
+For current service details, use the public website pages. Client dashboard and login areas are private and should not be indexed.

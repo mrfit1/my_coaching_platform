@@ -1,0 +1,2 @@
+import Link from 'next/link'; import {getCopy,type Locale} from '@/lib/i18n';
+export default function Footer({lang}:{lang:Locale}){const t=getCopy(lang);return <footer><div className="container footer-grid"><div><strong>{process.env.NEXT_PUBLIC_BRAND_NAME||'Toronto Performance Coaching'}</strong><p>{t.footer}</p><p className="muted">{t.legal}</p></div><div><Link href={`/${lang}/services`}>{t.services}</Link><Link href={`/${lang}/about`}>{t.about}</Link><Link href={`/${lang}/contact`}>{t.contact}</Link></div></div></footer>}

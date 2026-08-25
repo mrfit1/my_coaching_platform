@@ -1,0 +1,3 @@
+import Header from '@/components/Header';import Footer from '@/components/Footer';import {isLocale,locales,type Locale} from '@/lib/i18n';import {notFound} from 'next/navigation';
+export function generateStaticParams(){return locales.map(lang=>({lang}))}
+export default async function LocaleLayout({children,params}:{children:React.ReactNode,params:Promise<{lang:string}>}){const {lang}=await params;if(!isLocale(lang))notFound();const l=lang as Locale;return <div lang={l} dir={l==='fa'?'rtl':'ltr'} className={l==='fa'?'rtl':''}><Header lang={l}/>{children}<Footer lang={l}/></div>}
