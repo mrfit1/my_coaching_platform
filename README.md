@@ -149,3 +149,7 @@ Business data is separated from presentation in Supabase, and authenticated vers
 - Do not publish testimonials without permission.
 - Set exact prices, travel radius, cancellation policy, contact information and legal/privacy documents before taking payments.
 - When hiring trainers, verify credentials/insurance and configure their role/account before assigning clients.
+
+## Coach AI video concierge
+
+The global four-language `Coach AI` concierge now includes an optimized intro video at `/public/media/ai-concierge-intro.mp4` with a poster fallback. On the first page of a browser session it opens automatically, shows the video plus contextual quick actions, and smoothly fades the video away as soon as the visitor chooses an action, starts typing, or uses voice input. The chat then continues in the same panel. The video is muted, looping, `playsInline`, and compressed for web performance.
