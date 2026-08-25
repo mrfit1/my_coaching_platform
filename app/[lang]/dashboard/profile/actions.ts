@@ -1,0 +1,3 @@
+'use server';
+import {revalidatePath} from 'next/cache';import {requireUser} from '@/lib/auth';
+export async function saveProfile(lang:string,fd:FormData){const {supabase,user}=await requireUser(lang);await supabase!.from('profiles').upsert({id:user.id,email:user.email,full_name:String(fd.get('full_name')||''),phone:String(fd.get('phone')||''),preferred_language:String(fd.get('preferred_language')||lang),timezone:String(fd.get('timezone')||'UTC'),goals:String(fd.get('goals')||''),training_location:String(fd.get('training_location')||''),updated_at:new Date().toISOString()},{onConflict:'id'});revalidatePath(`/${lang}/dashboard/profile`)}

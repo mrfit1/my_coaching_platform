@@ -1,43 +1,151 @@
-# Toronto Performance Coaching — launch-ready foundation
+# Toronto Performance Coaching Platform — Production Foundation
 
-A fast multilingual Next.js foundation for a Toronto personal-training business that can expand into a multi-trainer platform and mobile app.
+A multilingual, SEO-first and AI-first coaching platform built for Toronto/GTA in-person personal training and worldwide online coaching, with a clean path to a multi-trainer business and future iOS/Android apps.
 
 ## Included
-- English, Persian/Farsi, French and Spanish public pages
-- Local Toronto service positioning: in-home, private, online, programming, nutrition coaching, beginner/active-aging
-- SEO: localized metadata, canonical + hreflang, sitemap, robots, Open Graph, large image previews
-- Structured data: Organization, Person, LocalBusiness/SportsActivityLocation, WebSite, Service list
-- `llms.txt` and crawlable semantic public pages for AI/search discovery
-- Simple Google/email authentication UI using Supabase Auth
-- Client dashboard foundation
-- Appointment-request API + Supabase schema
-- Stripe checkout API foundation for one-time or monthly payments
-- Multi-trainer-ready database roles (`client`, `trainer`, `admin`)
-- Mobile-friendly blue/white design and optimized Next.js images
 
-## Before first production launch
-1. Rename the temporary brand by setting `NEXT_PUBLIC_BRAND_NAME` in Vercel.
-2. Set `NEXT_PUBLIC_SITE_URL` to the real domain. This automatically updates canonical URLs, sitemap and structured data.
-3. Create a Supabase project and run `sql/supabase-schema.sql`.
-4. Add Supabase URL/keys to Vercel. In Supabase Auth enable Email and Google providers and add the production callback URL.
-5. Create Stripe products/prices, then add `STRIPE_SECRET_KEY`, `STRIPE_PRICE_SINGLE`, and `STRIPE_PRICE_MONTHLY`.
-6. Set the final public contact email/phone when ready.
-7. Replace temporary/custom pricing copy once service packages are finalized.
-8. Add a precise business/service address only if you want it public. The current structured data intentionally says Toronto, Ontario without publishing a street address.
+### Public website
+- Toronto/GTA in-person services plus worldwide online workout/nutrition coaching and programming
+- Next.js App Router + TypeScript
+- English, Persian/Farsi, French and Spanish routes
+- Local Toronto/GTA service architecture
+- Per-language canonical + hreflang metadata
+- Dynamic multilingual SEO entries editable from Admin
+- Organization, Person, LocalBusiness, WebSite and Service structured data
+- Dynamic sitemap including services created in Admin
+- `robots.txt` that keeps private dashboards/admin/API out of search while allowing public search/AI crawlers
+- `llms.txt` with concise machine-readable business context
+- AI concierge foundation designed to answer from real site/business context in four languages
+- Responsive, server-first pages and optimized Next.js images
 
-## Run locally
-```bash
-npm install
-npm run dev
+### Client portal
+- Supabase Google OAuth + email magic-link login
+- Client profile and onboarding fields
+- Appointment requests
+- Training plans
+- Nutrition guidance
+- Progress logging with a personal visual progress chart inside every client dashboard
+- Mobile-ready authenticated `/api/v1/...` endpoints
+
+### Admin portal
+Open `/{language}/admin` after assigning your account the `admin` role.
+
+Admin can manage:
+- Multilingual page content
+- Services
+- Pricing/packages and Stripe Price IDs
+- Trainers
+- Users and roles
+- Consultation leads
+- Appointment status and trainer assignment
+- Training and nutrition plans
+- Testimonials
+- SEO titles/descriptions for each language/path
+- Contact/business/service-area/payment settings
+
+### Payments
+- Stripe Checkout route uses package records from Supabase
+- Stripe webhook records completed checkout payments
+- Supports one-time and subscription package types
+- e-transfer / in-person can remain available as operational options in site settings
+
+### Security/data
+- Row Level Security for client, trainer and admin roles
+- Server-side role checks for the Admin portal
+- Private dashboard/admin routes are noindexed and blocked from robots
+- Stripe webhook signature verification
+- Service-role key is only used in server-only routes
+- Basic security response headers
+
+## 1. Create Supabase
+
+Create a Supabase project and run:
+
+`sql/supabase-schema.sql`
+
+Then create your own account through the website and run this once in Supabase SQL Editor:
+
+```sql
+update public.profiles
+set role = 'admin'
+where email = 'YOUR_REAL_EMAIL@example.com';
 ```
 
-## Build
+Do not make normal customers admins.
+
+## 2. Enable authentication
+
+In Supabase Authentication:
+- Enable Email
+- Enable Google if desired
+- Add your production domain and Vercel preview URLs to allowed redirect URLs
+- Callback path used by the app: `/auth/callback`
+
+## 3. Environment variables
+
+Add these in Vercel Project Settings → Environment Variables:
+
 ```bash
-npm run build
+NEXT_PUBLIC_SITE_URL=https://your-domain.com
+NEXT_PUBLIC_BRAND_NAME=Your Brand Name
+NEXT_PUBLIC_SUPABASE_URL=...
+NEXT_PUBLIC_SUPABASE_ANON_KEY=...
+SUPABASE_SERVICE_ROLE_KEY=...
+STRIPE_SECRET_KEY=...
+STRIPE_WEBHOOK_SECRET=...
 ```
 
-## Architecture note
-The web app uses Supabase as the shared authentication/database layer so a future iOS/Android app can use the same user accounts, appointments, plans and progress data rather than rebuilding the backend.
+Keep `SUPABASE_SERVICE_ROLE_KEY`, `STRIPE_SECRET_KEY`, and `STRIPE_WEBHOOK_SECRET` server-only. Never prefix them with `NEXT_PUBLIC_`.
 
-## SEO / AI visibility note
-No code can guarantee ranking or inclusion in AI answers. This project provides the technical foundation: multilingual pages, local service entities, consistent structured data, crawlable content, good information architecture, and clean machine-readable context. Authority still depends on real business information, reviews/citations, local profiles, useful content and time.
+## 4. Stripe
+
+Create products/prices in Stripe. In Admin → Pricing, add each package and paste its Stripe Price ID (`price_...`).
+
+Create a Stripe webhook pointing to:
+
+`https://YOUR-DOMAIN.com/api/stripe/webhook`
+
+Listen for at least:
+- `checkout.session.completed`
+- `checkout.session.async_payment_succeeded`
+
+Copy the webhook signing secret into `STRIPE_WEBHOOK_SECRET`.
+
+## 5. Vercel deploy
+
+Push the project contents to GitHub, import the repository in Vercel, add environment variables, then deploy.
+
+After the first successful production deploy:
+1. Set `NEXT_PUBLIC_SITE_URL` to the final canonical domain.
+2. Redeploy.
+3. Add the domain property in Google Search Console.
+4. Submit `/sitemap.xml` once.
+5. Use URL Inspection for important pages after major content changes.
+
+## Admin URLs
+
+Examples:
+- `/en/admin`
+- `/en/admin/content`
+- `/en/admin/services`
+- `/en/admin/pricing`
+- `/en/admin/trainers`
+- `/en/admin/clients`
+- `/en/admin/leads`
+- `/en/admin/bookings`
+- `/en/admin/plans`
+- `/en/admin/testimonials`
+- `/en/admin/seo`
+- `/en/admin/settings`
+
+## Future mobile app
+
+Business data is separated from presentation in Supabase, and authenticated versioned API routes begin under `/api/v1`. A future native app can use the same Supabase Auth/database model and Stripe backend rather than rebuilding the business logic from scratch.
+
+## Important launch notes
+
+- Fitness/nutrition copy should stay within the actual scope of service and credentials.
+- Nutrition coaching copy intentionally avoids medical claims.
+- Do not publish testimonials without permission.
+- Set exact prices, travel radius, cancellation policy, contact information and legal/privacy documents before taking payments.
+- When hiring trainers, verify credentials/insurance and configure their role/account before assigning clients.

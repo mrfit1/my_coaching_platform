@@ -1,0 +1,10 @@
+import type {Metadata} from 'next';
+import {notFound} from 'next/navigation';
+import ExerciseLibrary from '@/components/ExerciseLibrary';
+import {isLocale,type Locale} from '@/lib/i18n';
+import {getExerciseLibraryForLocale} from '@/lib/repdb';
+import {siteUrl,brandName} from '@/lib/seo';
+
+const pageCopy={en:{title:'Exercise Library',body:'Browse exercise demonstrations, target muscles, equipment and step-by-step technique notes.'},fa:{title:'آموزش حرکات ورزشی',body:'حرکات ورزشی، عضلات هدف، تجهیزات و نکات اجرای صحیح را جستجو کنید.'},fr:{title:'Bibliothèque d’exercices',body:'Parcourez les démonstrations, muscles ciblés, équipements et consignes techniques.'},es:{title:'Biblioteca de ejercicios',body:'Explora demostraciones, músculos objetivo, equipo e instrucciones paso a paso.'}};
+export async function generateMetadata({params}:{params:Promise<{lang:string}>}):Promise<Metadata>{const {lang}=await params;if(!isLocale(lang))return{};const c=pageCopy[lang];const path=`/${lang}/exercises`;return{metadataBase:new URL(siteUrl),title:`${c.title} | ${brandName}`,description:c.body,alternates:{canonical:path,languages:{'en-CA':'/en/exercises',fa:'/fa/exercises','fr-CA':'/fr/exercises',es:'/es/exercises','x-default':'/en/exercises'}},robots:{index:true,follow:true}}}
+export default async function Exercises({params}:{params:Promise<{lang:string}>}){const {lang}=await params;if(!isLocale(lang))notFound();const l=lang as Locale,c=pageCopy[l],exercises=await getExerciseLibraryForLocale(l);return <><section className="page-hero"><div className="container"><div className="kicker">EXERCISE EDUCATION</div><h1>{c.title}</h1><p className="lead">{c.body}</p></div></section><section className="section exercise-section"><div className="container">{exercises.length?<ExerciseLibrary exercises={exercises} lang={l}/>:<div className="panel"><h2>Exercise library is temporarily unavailable</h2><p>Please try again later.</p></div>}<p className="repdb-credit">Exercise data &amp; images by <a href="https://repdb.co" target="_blank" rel="noreferrer">RepDB</a>.</p></div></section></>}
