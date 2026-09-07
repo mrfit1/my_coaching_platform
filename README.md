@@ -153,3 +153,15 @@ Business data is separated from presentation in Supabase, and authenticated vers
 ## Coach AI video concierge
 
 The global four-language `Coach AI` concierge now includes an optimized intro video at `/public/media/ai-concierge-intro.mp4` with a poster fallback. On the first page of a browser session it opens automatically, shows the video plus contextual quick actions, and smoothly fades the video away as soon as the visitor chooses an action, starts typing, or uses voice input. The chat then continues in the same panel. The video is muted, looping, `playsInline`, and compressed for web performance.
+
+## Live pricing and Stripe links
+The public Pricing page uses the live Stripe Payment Links from `lib/payment-links.ts` as its single checkout source.
+
+- In-person 1 session: CA$115
+- In-person 5 sessions: CA$550 (CA$110/session)
+- In-person 10 sessions: CA$1,050 (CA$105/session)
+- In-person 20 sessions: CA$1,980 (CA$99/session)
+- Live video 1 session: CA$79
+- Live video 8 sessions: CA$576 (CA$72/session)
+- Live video 20 sessions: CA$1,300 (CA$65/session)
+- Free consultation: no payment; routes to the contact form.

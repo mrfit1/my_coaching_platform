@@ -141,3 +141,64 @@
   .ai-video-content p{font-size:.7rem !important}
   .ai-quick-actions button{font-size:.51rem !important}
 }
+
+/* Home hero trust facts — keep each item visually separated on every screen size. */
+.trust-row{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px 12px;
+  margin-top:24px;
+  max-width:760px;
+}
+.trust-item{
+  display:flex;
+  align-items:center;
+  min-height:42px;
+  padding:9px 12px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:rgba(255,255,255,.78);
+  color:var(--ink);
+  font-size:.88rem;
+  font-weight:720;
+  line-height:1.35;
+}
+.trust-item::before{
+  content:'✓';
+  display:inline-grid;
+  place-items:center;
+  width:20px;
+  height:20px;
+  margin-inline-end:8px;
+  flex:0 0 auto;
+  border-radius:999px;
+  background:var(--sky);
+  color:var(--blue);
+  font-size:.72rem;
+  font-weight:900;
+}
+.rtl .trust-item{justify-content:flex-start;text-align:right}
+
+/* Pricing cards: clear package hierarchy + reliable mobile layout. */
+.pricing-grid{grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch}
+.price-card{display:flex;flex-direction:column;gap:10px;min-height:270px}
+.price-card h2{margin:0;font-size:1.28rem;line-height:1.25;letter-spacing:-.02em}
+.price-card .price{margin:2px 0 0}
+.price-card p{margin:0 0 10px;color:var(--muted);flex:1}
+.price-card .btn{width:100%;margin-top:auto}
+
+@media(max-width:900px){
+  .trust-row{grid-template-columns:repeat(2,minmax(0,1fr));max-width:none}
+  .pricing-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .hero-actions .btn{width:100%;padding:12px 10px}
+  .trust-row{grid-template-columns:1fr;gap:8px;margin-top:18px}
+  .trust-item{font-size:.86rem;min-height:40px}
+  .pricing-grid{grid-template-columns:1fr}
+  .price-card{min-height:0;padding:22px}
+}
+@media(max-width:390px){
+  .hero-actions{grid-template-columns:1fr}
+}
