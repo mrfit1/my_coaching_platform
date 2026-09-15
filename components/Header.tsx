@@ -8,7 +8,7 @@ export default async function Header({ lang }: { lang: Locale }) {
   const brand =
     (typeof settings.brand_name === 'string' && settings.brand_name) ||
     process.env.NEXT_PUBLIC_BRAND_NAME ||
-    'Toronto Performance Coaching';
+    'World Train';
 
   const links = [
     [`/${lang}/services`, t.services],

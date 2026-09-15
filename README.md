@@ -1,4 +1,4 @@
-# Toronto Performance Coaching Platform — Production Foundation
+# World Train Platform — Production Foundation
 
 A multilingual, SEO-first and AI-first coaching platform built for Toronto/GTA in-person personal training and worldwide online coaching, with a clean path to a multi-trainer business and future iOS/Android apps.
 

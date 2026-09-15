@@ -1,4 +1,4 @@
--- Toronto Performance Coaching production schema
+-- World Train production schema
 -- Run in a new Supabase project SQL editor. Review before applying to an existing database.
 create extension if not exists pgcrypto;
 
@@ -347,7 +347,7 @@ insert into public.services(slug,title,short_description,description,service_typ
 on conflict(slug) do nothing;
 
 insert into public.site_settings(key,value) values
-('brand_name','"Toronto Performance Coaching"'::jsonb),
+('brand_name','"World Train"'::jsonb),
 ('service_areas','["Toronto","Selected GTA areas"]'::jsonb),
 ('online_coaching_worldwide','true'::jsonb),
 ('payments','{"stripe":true,"etransfer":true,"in_person":true}'::jsonb)

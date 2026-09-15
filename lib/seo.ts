@@ -14,7 +14,7 @@ function resolveSiteUrl() {
 
 export const siteUrl = resolveSiteUrl();
 export const brandName =
-  process.env.NEXT_PUBLIC_BRAND_NAME || 'Toronto Performance Coaching';
+  process.env.NEXT_PUBLIC_BRAND_NAME || 'World Train';
 
 const baseSeo: Record<Locale, Record<string, [string, string]>> = {
   en: {

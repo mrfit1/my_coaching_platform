@@ -1,5 +1,5 @@
 /**
- * Live Stripe Payment Links for Toronto Performance Coaching.
+ * Live Stripe Payment Links for World Train.
  * Prices are in CAD. Keep this file as the single source of truth for checkout links.
  */
 export const PAYMENT_LINKS = {
