@@ -22,7 +22,6 @@ export default async function Header({ lang }: { lang: Locale }) {
     <header className="site-header">
       <div className="container nav">
         <Link className="brand" href={`/${lang}`} aria-label={`${brand} home`}>
-          <span className="brand-mark">TP</span>
           <span className="brand-name">{brand}</span>
         </Link>
 
